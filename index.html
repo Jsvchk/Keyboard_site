@@ -10,40 +10,21 @@
             font-family: Arial, sans-serif; 
             padding: 10px;
         }
-        h1 {
-            font-size: 5vw;
-        }
-        p {
-            font-size: 4vw;
-        }
-        #letter { 
-            font-size: 10vw; 
-            color: blue; 
-            margin: 20px; 
-        }
-        #result { 
-            font-size: 5vw; 
-            margin-top: 20px; 
-        }
-        #stats { 
-            margin-top: 20px; 
-            font-size: 4vw; 
-        }
+        h1 { font-size: 5vw; }
+        p { font-size: 4vw; }
+        #letter { font-size: 10vw; color: blue; margin: 20px; }
+        #result, #stats { font-size: 5vw; margin-top: 20px; }
         button { 
-            font-size: 4vw; 
-            padding: 10px 20px; 
-            margin: 10px;
-            border: none;
-            border-radius: 10px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
+            font-size: 4vw; padding: 10px 20px; 
+            margin: 10px; border: none; border-radius: 10px;
+            background-color: #007bff; color: white; cursor: pointer;
         }
-        button:disabled {
-            background-color: #ccc;
+        button:disabled { background-color: #ccc; }
+        input { 
+            position: absolute; opacity: 0; width: 1px; height: 1px; 
+            left: -1000px; /* Приховуємо поле, але залишаємо його доступним */
         }
 
-        /* Адаптація для малих екранів */
         @media (max-width: 768px) {
             #letter { font-size: 15vw; }
             #result, #stats { font-size: 6vw; }
@@ -62,6 +43,9 @@
     <div id="result"></div>
     <div id="stats"></div>
 
+    <!-- Приховане поле для виклику клавіатури -->
+    <input type="text" id="hiddenInput" autocomplete="off">
+
     <script>
         const characters = "абвгґдеєжзиійклмнопрстуфхцчшщьюя.,!?";
         let currentCharacter = '';
@@ -69,6 +53,7 @@
         let correctCount = 0;
         let totalCount = 0;
         let gameActive = false;
+        const hiddenInput = document.getElementById("hiddenInput");
 
         function newCharacter() {
             currentCharacter = characters[Math.floor(Math.random() * characters.length)];
@@ -85,6 +70,9 @@
             document.getElementById("startButton").disabled = true;
             document.getElementById("endButton").disabled = false;
             newCharacter();
+
+            // Викликаємо клавіатуру
+            hiddenInput.focus();
         }
 
         function endGame() {
@@ -102,25 +90,28 @@
         document.getElementById("startButton").addEventListener("click", startGame);
         document.getElementById("endButton").addEventListener("click", endGame);
 
-        document.addEventListener("keydown", function(event) {
+        // Обробка введення символів у прихованому полі
+        hiddenInput.addEventListener("input", function(event) {
             if (!gameActive) return;
-
-            let pressedKey = event.key;
-            if (pressedKey.length === 1) {
+            
+            let pressedKey = event.data;
+            if (pressedKey) {
                 pressedKey = pressedKey.toLowerCase();
+                totalCount++;
+
+                if (pressedKey === currentCharacter) {
+                    correctCount++;
+                    document.getElementById("result").textContent = "Правильно!";
+                    document.getElementById("result").style.color = "green";
+                    newCharacter();
+                } else {
+                    document.getElementById("result").textContent = "Спробуй ще раз!";
+                    document.getElementById("result").style.color = "red";
+                }
             }
 
-            totalCount++;
-
-            if (pressedKey === currentCharacter) {
-                correctCount++;
-                document.getElementById("result").textContent = "Правильно!";
-                document.getElementById("result").style.color = "green";
-                newCharacter();
-            } else {
-                document.getElementById("result").textContent = "Спробуй ще раз!";
-                document.getElementById("result").style.color = "red";
-            }
+            // Очищуємо поле, щоб воно могло зчитувати нові символи
+            hiddenInput.value = "";
         });
     </script>
 </body>
