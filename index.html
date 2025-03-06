@@ -5,20 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Клавіатурний тренажер</title>
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-        #letter { font-size: 50px; color: blue; margin: 20px; }
-        #result { font-size: 24px; margin-top: 20px; }
-        #stats { margin-top: 20px; font-size: 20px; }
-        button { font-size: 18px; margin: 10px; padding: 10px; }
+        body { 
+            text-align: center; 
+            font-family: Arial, sans-serif; 
+            padding: 10px;
+        }
+        h1 {
+            font-size: 5vw;
+        }
+        p {
+            font-size: 4vw;
+        }
+        #letter { 
+            font-size: 10vw; 
+            color: blue; 
+            margin: 20px; 
+        }
+        #result { 
+            font-size: 5vw; 
+            margin-top: 20px; 
+        }
+        #stats { 
+            margin-top: 20px; 
+            font-size: 4vw; 
+        }
+        button { 
+            font-size: 4vw; 
+            padding: 10px 20px; 
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+        }
+
+        /* Адаптація для малих екранів */
+        @media (max-width: 768px) {
+            #letter { font-size: 15vw; }
+            #result, #stats { font-size: 6vw; }
+            button { font-size: 6vw; padding: 15px; }
+        }
     </style>
 </head>
 <body>
     <h1>Клавіатурний тренажер</h1>
     <p>Натисни правильну літеру або символ на клавіатурі</p>
-    
+
     <button id="startButton">Почати</button>
     <button id="endButton" disabled>Завершити</button>
-    
+
     <div id="letter"></div>
     <div id="result"></div>
     <div id="stats"></div>
