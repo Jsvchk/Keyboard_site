@@ -47,7 +47,7 @@
     <input type="text" id="hiddenInput" autocomplete="off">
 
     <script>
-        const characters = "абвгґдеєжзиійклмнопрстуфхцчшщьюя.,!?";
+        const characters = "абвгґдеєжзиійклмнопрстуфхцчшщьюя.,!?ЙЦУКЕНГШЩЗХЇФІВАПРОЛДЖЄЯЧСМИТЬБЮ";
         let currentCharacter = '';
         let startTime = 0;
         let correctCount = 0;
@@ -81,7 +81,7 @@
             let speed = Math.round(correctCount / elapsedTime); // Зн/хв
             let accuracy = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
-            document.getElementById("stats").textContent = `Швидкість: ${speed} Зн/хв | Точність: ${accuracy}%`;
+            document.getElementById("stats").textContent = `Швидкість: ${speed} зн/хв | Точність: ${accuracy}%`;
             document.getElementById("letter").textContent = "";
             document.getElementById("startButton").disabled = false;
             document.getElementById("endButton").disabled = true;
